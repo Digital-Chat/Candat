@@ -1,3 +1,106 @@
+<!-- ===== Login Overlay & Basic Client Protection (place near top of your HTML) ===== -->
+<style>
+  /* login overlay styles */
+  #loginOverlay {
+    position:fixed; inset:0; background:linear-gradient(180deg, rgba(2,6,23,0.95), rgba(11,25,60,0.95));
+    z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px;
+  }
+  #loginBox {
+    width:360px; max-width:94%; background: #0f1724; border-radius:12px; padding:18px 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6); color:#fff; text-align:center;
+    font-family: 'Tajawal', sans-serif;
+  }
+  #loginBox h3{ margin:0 0 10px; font-size:18px; color: #FFD700; text-shadow:0 0 8px rgba(255,215,0,0.12);}
+  #loginBox input{ width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff; margin-bottom:10px; }
+  #loginBox button{ padding:10px 12px; border-radius:8px; border:none; cursor:pointer; background:linear-gradient(90deg,#4ea8ff,#7c3aed); color:#fff; font-weight:800; width:100%;}
+  #loginMsg{ color:#ffb3b3; font-size:13px; min-height:18px; margin-top:8px;}
+</style>
+
+<div id="loginOverlay" aria-hidden="false">
+  <div id="loginBox" role="dialog" aria-modal="true" aria-label="Login">
+    <h3>Login — Candat Tool</h3>
+    <input id="loginPwd" type="password" placeholder="Enter your password" autocomplete="off" />
+    <button id="loginBtn">Login</button>
+    <div id="loginMsg"></div>
+    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.6);">Password protected</div>
+  </div>
+</div>
+
+<script>
+  // ===== CONFIRM / ADJUST PASSWORD HERE =====
+  const FIXED_PASSWORD = 'DigitalChat2025'; // غيّرها لو احتجت
+
+  // hide the actual app initially (wrap your app in #protectedApp)
+  // **Important**: you need to wrap the whole tool markup in <div id="protectedApp"> ... </div>
+  // or if your HTML already has a main root, set its id accordingly and remove the overlay when correct.
+  document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('loginOverlay');
+    const btn = document.getElementById('loginBtn');
+    const pwd = document.getElementById('loginPwd');
+    const msg = document.getElementById('loginMsg');
+
+    // focus
+    pwd.focus();
+
+    function unlock() {
+      if (pwd.value === FIXED_PASSWORD) {
+        // remove overlay and show app
+        overlay.style.opacity = '0';
+        setTimeout(()=> overlay.style.display = 'none', 220);
+        // reveal protected app container if exists
+        const protectedEl = document.getElementById('protectedApp');
+        if (protectedEl) protectedEl.style.display = 'block';
+        // optionally set a flag in sessionStorage so page reload in same session stays unlocked
+        sessionStorage.setItem('candat_unlocked', '1');
+        msg.textContent = '';
+      } else {
+        msg.textContent = 'wrong password, please try again';
+        pwd.value = '';
+        pwd.focus();
+      }
+    }
+
+    btn.addEventListener('click', unlock);
+    pwd.addEventListener('keydown', (e)=> { if (e.key === 'Enter') unlock(); });
+
+    // if previously unlocked in this tab session — skip login
+    if (sessionStorage.getItem('candat_unlocked') === '1') {
+      overlay.style.display = 'none';
+      const protectedEl = document.getElementById('protectedApp');
+      if (protectedEl) protectedEl.style.display = 'block';
+    }
+
+    // ===== Basic client-side protection (deterrents) =====
+    // Disable right-click
+    document.addEventListener('contextmenu', (e) => {
+      // allow if overlay active (so admin can still inspect if needed), otherwise prevent
+      if (!overlay || overlay.style.display === 'none') e.preventDefault();
+    });
+
+    // Block common dev-tools shortcuts
+    document.addEventListener('keydown', function(e) {
+      // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+
+    // Also try to detect when devtools opened (best-effort) and hide overlay (deterrent)
+    let devtoolsOpened = false;
+    const threshold = 160;
+    setInterval(function() {
+      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+      if ((widthThreshold || heightThreshold) && !devtoolsOpened) {
+        devtoolsOpened = true;
+        console.warn('DevTools detected — access is discouraged');
+      }
+    }, 1000);
+  });
+</script>
+<!-- ===== end login overlay ===== -->
+
 <!doctype html>
 <html lang="ar">
 <head>
