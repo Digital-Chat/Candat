@@ -137,15 +137,22 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <div class="upload-row">
-      <button class="upload-btn" id="uploadBtn">📤 رفع ملف Excel</button>
-      <input type="file" id="fileInput" accept=".xlsx" style="display:none">
-    </div>
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="🔍 ابحث داخل كل الشيتات...">
-    </div>
-    <div class="sheet-list" id="sheetList"></div>
-  </div>
+   <!-- بحث فقط -->
+<div class="search-box" style="
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.08);
+  padding:10px 12px;border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  transition:all 0.3s ease;
+">
+  <input type="text" id="searchInput"
+    placeholder="🔍 ابحث داخل كل الشيتات..."
+    style="flex:1;border:none;outline:none;
+           background:transparent;color:var(--text);
+           font-size:15px;padding:6px;
+           font-family:'Tajawal',sans-serif;">
+</div>
 
   <!-- Main Content -->
   <div class="main">
