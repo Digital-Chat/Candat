@@ -335,10 +335,14 @@ document.addEventListener("DOMContentLoaded", () => {
 searchInput.addEventListener("input", () => {
   const q = (searchInput.value || '').trim().toLowerCase();
 
-  // لو الحقل فاضي: عرض الشيت الحالي (أو رسالة لو مفيش شيت محدد)
+  // GLOBAL SEARCH — استخدم هذا الاستماع بدل القديم
+searchInput.addEventListener("input", () => {
+  const q = (searchInput.value || '').trim().toLowerCase();
+
+  // empty => show current sheet or placeholder
   if (!q) {
-    if (currentSheet) {
-      renderCards(workbookData[currentSheet] || []);
+    if (currentSheet && workbookData[currentSheet]) {
+      renderCards(workbookData[currentSheet]);
       sheetTitle.textContent = `📄 شيت: ${currentSheet}`;
     } else {
       cardsGrid.innerHTML = '<div class="empty">اختر شيت أو ارفع ملفًا للبدء</div>';
@@ -347,30 +351,26 @@ searchInput.addEventListener("input", () => {
     return;
   }
 
-  // نجمع كل النتائج من كل الشيتات
+  // collect matches from all sheets
   const results = [];
   Object.keys(workbookData).forEach(sheetName => {
     (workbookData[sheetName] || []).forEach(item => {
-      const hay = ((item.name || '') + ' ' + (item.content || '')).toString().toLowerCase();
+      const hay = ((item.name || '') + ' ' + (item.content || '')).toLowerCase();
       if (hay.includes(q)) {
         const copy = Object.assign({}, item);
-        copy.sheet = sheetName; // ضمن أن خاصية sheet موجودة
+        copy.sheet = sheetName;
         results.push(copy);
       }
     });
   });
 
-  // عرض النتائج
   if (!results.length) {
     cardsGrid.innerHTML = '<div class="empty">لا توجد نتائج مطابقة 🔍</div>';
     sheetTitle.textContent = `نتائج البحث عن: "${searchInput.value.trim()}"`;
   } else {
-    // عنوان البحث
     sheetTitle.textContent = `نتائج البحث عن: "${searchInput.value.trim()}" (${results.length})`;
-    // عرض النتائج (تأكد أن renderCards يتعامل مع عناصر تحتوي على .sheet)
     renderCards(results);
   }
-});
 });
 </script>
 </body>
