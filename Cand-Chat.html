@@ -125,7 +125,26 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
     font-family: 'Tajawal', sans-serif;
   }
   #loginBox h3{ margin:0 0 10px; font-size:18px; color: #FFD700; text-shadow:0 0 8px rgba(255,215,0,0.12);}
-  #loginBox input{ width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff; margin-bottom:10px; }
+  #loginBox input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.15);
+  background-color:rgba(255,255,255,0.05);
+  color:#fff;
+  margin-bottom:12px;
+  outline:none;
+  font-size:15px;
+  text-align:left;
+  direction:ltr;
+  box-shadow:inset 0 0 5px rgba(0,0,0,0.25);
+  transition:border .2s ease, box-shadow .2s ease;
+}
+#loginBox input:focus{
+  border-color:#4ea8ff;
+  box-shadow:0 0 6px rgba(78,168,255,0.4);
+}
+
   #loginBox button{ padding:10px 12px; border-radius:8px; border:none; cursor:pointer; background:linear-gradient(90deg,#4ea8ff,#7c3aed); color:#fff; font-weight:800; width:100%;}
   #loginMsg{ color:#ffb3b3; font-size:13px; min-height:18px; margin-top:8px;}
 </style>
