@@ -122,15 +122,16 @@ margin:0 auto;box-sizing:border-box;}
 .sheet-list::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb); border-radius: 20px; border: 2px solid var(--card); }
 .sheet-list::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
 
+/* *** FINAL STYLE FOR SHEET ITEMS *** */
 .sheet-item{
-  padding:12px 14px;
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:700;
-  /* *** MODIFICATION HERE: Text is now centered *** */
-  text-align:center;
-  color:var(--text);
-  border:1px solid transparent;
+  padding: 12px 14px;
+  margin-right: 8px; /* Added margin for alignment */
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  text-align: right; /* Reverted to right-align for visibility */
+  color: var(--text);
+  border: 1px solid transparent;
   transition: background .2s ease, border-color .2s ease, transform 0.2s ease;
   white-space: nowrap;
   overflow: hidden;
@@ -138,8 +139,8 @@ margin:0 auto;box-sizing:border-box;}
 }
 .sheet-item:hover { background: var(--bg1); transform: translateX(-4px); }
 .sheet-item.active{
-background:linear-gradient(90deg,rgba(78,168,255,.15),rgba(124,58,237,.12));
-border-color: rgba(78,168,255, .3); color: var(--text);
+  background:linear-gradient(90deg,rgba(78,168,255,.15),rgba(124,58,237,.12));
+  border-color: rgba(78,168,255, .3); color: var(--text);
 }
 
 /* Main content */
@@ -154,7 +155,8 @@ border-color: rgba(78,168,255, .3); color: var(--text);
 
 @media(max-width:768px){
   .app{flex-direction:column-reverse;padding-top:70px;}
-  .sidebar{position:relative;top:auto;right:auto;width:100%; margin-bottom: 24px; height: auto; max-height: 50vh; padding: 16px;}
+  .sidebar{position:relative;top:auto;right:auto;width:100%; margin-bottom: 24px; height: auto; max-height: 50vh; padding: 16px; margin-right: 0;}
+  .sheet-item { margin-right: 0; }
   .main{margin-right:0}
 }
 
@@ -383,7 +385,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function showSheet(name) {
-    // *** MODIFICATION HERE: Scroll window to top ***
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
     currentSheet = name;
