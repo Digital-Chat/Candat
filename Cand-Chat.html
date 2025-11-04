@@ -169,6 +169,56 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
   box-shadow: 0 0 6px rgba(78,168,255,0.38);
   background-color: rgba(255,255,255,0.07);
 }
+  /* ====== إعادة تعيين آمنة لصندوق الدخول والعنوان والحقل ====== */
+#loginBox {
+  box-sizing: border-box;        /* مهم حتى padding يحتسب داخل العرض */
+  width: 360px;
+  max-width: 94%;
+  background: #0f1724;
+  border-radius: 12px;
+  padding: 22px 20px 18px 20px;  /* مساحة كافية فوق الحقل لتجنب التداخل */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* عنوان الصندوق */
+#loginBox h3 {
+  margin: 0 0 14px 0;            /* مسافة واضحة بين العنوان والحقل */
+  font-size: 18px;
+  color: #FFD700;
+  text-shadow:0 0 8px rgba(255,215,0,0.12);
+}
+
+/* الحقل نفسه — تخلصنا من display:flex لأن input عنصر بديل */
+#loginBox input {
+  box-sizing: border-box;        /* يجعل height و padding محسوبين معاً */
+  width: 100%;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background-color: rgba(255,255,255,0.04);
+  color: #fff;
+  margin: 0 0 14px 0;            /* لا تضع margin-top سلبية */
+  outline: none;
+  font-size: 15px;
+  font-family: 'Tajawal', sans-serif;
+  direction: ltr;
+  text-align: left;
+  line-height: 44px;             /* يضمن محاذاة رأسية سليمة للنص */
+  caret-color: #4ea8ff;
+  transition: border .18s ease, box-shadow .18s ease, background .12s ease;
+}
+
+#loginBox input::placeholder { color: rgba(255,255,255,0.65); }
+
+#loginBox input:focus{
+  border-color: #4ea8ff;
+  box-shadow: 0 0 6px rgba(78,168,255,0.38);
+  background-color: rgba(255,255,255,0.07);
+}
 </style>
 
 <div id="loginOverlay" aria-hidden="false">
