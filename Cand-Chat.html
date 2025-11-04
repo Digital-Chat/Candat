@@ -119,45 +119,56 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
     position:fixed; inset:0; background:linear-gradient(180deg, rgba(2,6,23,0.95), rgba(11,25,60,0.95));
     z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px;
   }
-  #loginBox {
-    width:360px; max-width:94%; background: #0f1724; border-radius:12px; padding:18px 20px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6); color:#fff; text-align:center;
-    font-family: 'Tajawal', sans-serif;
-  }
-  #loginBox h3{ margin:0 0 10px; font-size:18px; color: #FFD700; text-shadow:0 0 8px rgba(255,215,0,0.12);}
-  #loginBox input {
+  /* ====== إعادة تعيين آمنة لصندوق الدخول والعنوان والحقل ====== */
+#loginBox {
+  box-sizing: border-box;        /* مهم حتى padding يحتسب داخل العرض */
+  width: 360px;
+  max-width: 94%;
+  background: #0f1724;
+  border-radius: 12px;
+  padding: 22px 20px 18px 20px;  /* مساحة كافية فوق الحقل لتجنب التداخل */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  color: #fff;
+  text-align: center;
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* عنوان الصندوق */
+#loginBox h3 {
+  margin: 0 0 14px 0;            /* مسافة واضحة بين العنوان والحقل */
+  font-size: 18px;
+  color: #FFD700;
+  text-shadow:0 0 8px rgba(255,215,0,0.12);
+}
+
+/* الحقل نفسه — تخلصنا من display:flex لأن input عنصر بديل */
+#loginBox input {
+  box-sizing: border-box;        /* يجعل height و padding محسوبين معاً */
   width: 100%;
   height: 44px;
   padding: 0 12px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  background-color: rgba(255,255,255,0.04);
   color: #fff;
-  margin-bottom: 14px;
+  margin: 0 0 14px 0;            /* لا تضع margin-top سلبية */
   outline: none;
   font-size: 15px;
   font-family: 'Tajawal', sans-serif;
   direction: ltr;
   text-align: left;
-  display: flex;
-  align-items: center;
-  line-height: normal;
-  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.25);
-  transition: all 0.2s ease;
+  line-height: 44px;             /* يضمن محاذاة رأسية سليمة للنص */
   caret-color: #4ea8ff;
+  transition: border .18s ease, box-shadow .18s ease, background .12s ease;
 }
 
-#loginBox input::placeholder {
-  color: rgba(255, 255, 255, 0.65);
-}
+#loginBox input::placeholder { color: rgba(255,255,255,0.65); }
 
-#loginBox input:focus {
+#loginBox input:focus{
   border-color: #4ea8ff;
-  box-shadow: 0 0 6px rgba(78, 168, 255, 0.4);
-  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 6px rgba(78,168,255,0.38);
+  background-color: rgba(255,255,255,0.07);
 }
-  #loginBox button{ padding:10px 12px; border-radius:8px; border:none; cursor:pointer; background:linear-gradient(90deg,#4ea8ff,#7c3aed); color:#fff; font-weight:800; width:100%;}
-  #loginMsg{ color:#ffb3b3; font-size:13px; min-height:18px; margin-top:8px;}
 </style>
 
 <div id="loginOverlay" aria-hidden="false">
