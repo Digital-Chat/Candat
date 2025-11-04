@@ -4,189 +4,161 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Canned Tool</title>
-<link rel="icon" href=https://us.123rf.com/450wm/desbayy/desbayy1809/desbayy180901438/107685339-ct-initial-letter-with-negative-space-logo-icon-vector-template.jpg>
+<link rel="icon" href="https://us.123rf.com/450wm/desbayy/desbayy1809/desbayy180901438/107685339-ct-initial-letter-with-negative-space-logo-icon-vector-template.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --accent1:#4ea8ff;
-  --accent2:#7c3aed;
-  --warn:#FFD700;
-  --footer-from:#251A40;
-  --footer-to:#0B3559;
-  --sidebar-w:300px;
-  --splash-duration:1000ms;
+  --accent1: #4ea8ff;
+  --accent2: #7c3aed;
+  --success: #22c55e;
+  --warn: #FFD700;
+  --footer-from: #251A40;
+  --footer-to: #0B3559;
+  --sidebar-w: 280px;
 }
 [data-theme="light"]{
-  --bg1:#f5f8fb;
-  --bg2:#eef3fb;
-  --card:#ffffff;
-  --muted:#334155;
-  --text:#0f1724;
+  --bg1: #f4f7fa;
+  --bg2: #ffffff;
+  --card: #ffffff;
+  --muted: #526176;
+  --text: #111827;
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(99, 102, 241, 0.08);
+  --shadow-color-hover: rgba(99, 102, 241, 0.15);
+  --search-bg: #eef2f7;
 }
 [data-theme="dark"]{
-  --bg1:#0b0f14;
-  --bg2:#141226;
-  --card:#1a1d29;
-  --muted:#cbd5e1;
-  --text:#e6f0ff;
+  --bg1: #0f172a;
+  --bg2: #1e293b;
+  --card: #162033;
+  --muted: #94a3b8;
+  --text: #f8fafc;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --shadow-color: rgba(0,0,0,0.2);
+  --shadow-color-hover: rgba(0,0,0,0.35);
+  --search-bg: #0f172a;
 }
 html,body{
-  height:100%;margin:0;padding:0;font-family:'Tajawal',sans-serif;direction:rtl;
-  background:linear-gradient(135deg,var(--bg1),var(--bg2));
-  color:var(--muted);-webkit-font-smoothing:antialiased;
+  height:100%; margin:0; padding:0; font-family:'Tajawal',sans-serif; direction:rtl;
+  background:var(--bg1);
+  color:var(--muted); -webkit-font-smoothing:antialiased;
+  transition: background .3s ease, color .3s ease;
 }
+
 /* Splash */
 .splash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;
-background:var(--bg1);transition:opacity .3s ease;}
+background:var(--bg1);transition:opacity .4s ease;}
 .splash-box{display:flex;flex-direction:column;align-items:center;gap:12px;}
-.splash .gear{font-size:28px;animation:spin 1s linear infinite;}
+.splash .gear{font-size:32px;animation:spin 1s linear infinite;}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
 /* Header */
-.header-wrap{position:fixed;top:0;left:0;right:0;height:38px;display:flex;align-items:center;z-index:120;
-background:linear-gradient(90deg,var(--accent2),var(--accent1));box-shadow:0 6px 20px rgba(0,0,0,.45);}
+.header-wrap{position:fixed;top:0;left:0;right:0;height:42px;display:flex;align-items:center;z-index:200;
+background:linear-gradient(90deg,var(--accent2),var(--accent1));box-shadow:0 4px 15px rgba(0,0,0,.25);}
 .marquee{overflow:hidden;white-space:nowrap;width:100%;padding:6px 18px;}
-.marquee .text{display:inline-block;white-space:nowrap;font-weight:800;color:var(--warn);font-size:13px;
-text-shadow:0 0 10px rgba(255,215,0,.18);animation:moveLeft 14s linear infinite;}
+.marquee .text{display:inline-block;white-space:nowrap;font-weight:700;color:white;font-size:14px;
+text-shadow:0 1px 2px rgba(0,0,0,.2);animation:moveLeft 16s linear infinite;}
 @keyframes moveLeft{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 
 /* Theme Toggle */
-.theme-toggle{position:fixed;top:6px;left:12px;z-index:130;
-background:linear-gradient(90deg,var(--accent1),var(--accent2));
-border:none;color:white;padding:6px 8px;border-radius:7px;cursor:pointer;font-weight:800;}
+.theme-toggle{position:fixed;top:5px;left:12px;z-index:210;
+background:transparent;
+border:none;color:white;padding:6px 8px;border-radius:8px;cursor:pointer;font-weight:800;font-size:18px;
+transition: background .2s ease, transform .2s ease;}
+.theme-toggle:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
+
 
 /* Layout */
-.app{display:flex;flex-direction:row-reverse;gap:20px;
-padding:86px 20px 120px 20px;max-width:1400px;margin:0 auto;box-sizing:border-box;}
-.sidebar{position:fixed;top:86px;right:20px;width:var(--sidebar-w);
-background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-border-radius:12px;padding:14px;box-shadow:0 10px 30px rgba(2,6,23,.6);
-border:1px solid rgba(255,255,255,.03);z-index:110;}
-.upload-row{display:flex;gap:8px;align-items:center;}
-.upload-btn{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;
-border:none;cursor:pointer;color:#fff;background:linear-gradient(90deg,var(--accent1),var(--accent2));
-font-weight:800;width:100%;}
-.search-box{margin-top:12px;display:flex;align-items:center;gap:8px;
-background:rgba(255,255,255,.02);padding:8px;border-radius:10px;
-border:1px solid rgba(255,255,255,.02);}
-.search-box input{flex:1;border:none;outline:none;background:transparent;
-color:var(--text);font-size:14px;padding:6px;}
-.sheet-list{margin-top:12px;display:flex;flex-direction:column;gap:8px;
-max-height:56vh;overflow:auto;padding-right:6px;}
-.sheet-item{padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:700;
-text-align:right;color:var(--text);border:1px solid rgba(255,255,255,.02);}
-.sheet-item.active{background:linear-gradient(90deg,rgba(78,168,255,.12),rgba(124,58,237,.08));}
+.app{display:flex;flex-direction:row-reverse;gap:24px;
+padding: 70px 24px 80px 24px;
+max-width:1400px;margin:0 auto;box-sizing:border-box;}
+.sidebar{position:fixed;top:70px; right:24px;width:var(--sidebar-w);
+background: var(--card);
+border-radius:14px;padding:16px;box-shadow:0 10px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
+border:1px solid var(--border-color);z-index:110;}
+
+/* Search Box inside Sidebar */
+.search-box{
+  display:flex;align-items:center;gap:8px;
+  background:var(--search-bg);padding:4px 10px;border-radius:10px;
+  border:1px solid var(--border-color);transition: border-color .2s ease, box-shadow .2s ease;
+  margin-bottom: 16px;
+}
+.search-box:focus-within {
+  border-color: var(--accent1); box-shadow: 0 0 0 3px rgba(78,168,255,.25);
+}
+.search-box input{
+  flex:1;border:none;outline:none;background:transparent;
+  color:var(--text);font-size:14px;padding:8px 4px; direction: ltr; text-align: left;
+}
+
+.sheet-list{display:flex;flex-direction:column;gap:8px;
+max-height:65vh;overflow:auto;padding: 0 6px 0 0;}
+.sheet-item{padding:12px 14px;border-radius:10px;cursor:pointer;font-weight:700;
+text-align:right;color:var(--text);border:1px solid transparent; transition: background .2s ease, border-color .2s ease, transform 0.2s ease;}
+.sheet-item:hover { background: var(--bg1); transform: translateX(-4px); }
+.sheet-item.active{
+background:linear-gradient(90deg,rgba(78,168,255,.15),rgba(124,58,237,.12));
+border-color: rgba(78,168,255, .3); color: var(--text);
+}
 
 /* Main content */
-.main{flex:1;min-height:60vh;margin-right:calc(var(--sidebar-w) + 60px);
-background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));
-border-radius:12px;padding:18px;box-shadow:0 10px 30px rgba(2,6,23,.08);
-border:1px solid rgba(255,255,255,.02);}
-.main-header{display:flex;justify-content:space-between;align-items:center;gap:10px;}
-.main-header h2{margin:0;color:var(--text);font-size:18px;font-weight:800;}
-.instructions{font-size:13px;color:rgba(255,255,255,.7);align-self:flex-start;margin-left:8px;}
-.grid{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch;}
-@media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}.main{margin-right:340px}}
-@media(max-width:640px){.app{flex-direction:column-reverse;padding-top:120px;}
-.grid{grid-template-columns:1fr}.sidebar{position:relative;top:auto;right:auto;width:100%}
-.main{margin-right:0}}
-.card{border-radius:12px;border:1px solid rgba(255,255,255,.03);display:flex;flex-direction:column;
-overflow:hidden;cursor:pointer;min-height:170px;transition:transform .18s,box-shadow .18s,opacity .35s;
-background:var(--card);box-shadow:0 8px 18px rgba(0,0,0,.25);opacity:0;transform:translateY(6px);}
-.card.visible{opacity:1;transform:translateY(0);}
-.card:hover{transform:translateY(-6px);box-shadow:0 18px 30px rgba(0,0,0,.35);}
-.card-title{text-align:center;font-weight:800;font-size:15px;color:var(--accent1);
-padding:12px 10px;border-bottom:1px dashed rgba(255,255,255,.02);}
-.card-content{padding:12px;flex:1;overflow:hidden;display:flex;flex-direction:column;}
-.frame p { margin: 2px 0; line-height: 1.3; }
-.frame{background:rgba(255,255,255,.02);border-radius:8px;padding:10px;flex:1;
-color:var(--text);font-size:13px;line-height:1.45;overflow:hidden;
-display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;text-overflow:ellipsis;}
-.card-footer{padding:8px 12px;font-size:12px;color:rgba(255,255,255,.65);
-border-top:1px solid rgba(255,255,255,.02);}
-.empty{text-align:center;padding:28px;color:var(--muted);
-background:rgba(255,255,255,.02);border-radius:8px;}
-.footer-wrapper{position:fixed;left:0;right:0;bottom:0;z-index:100;}
-.footer-bar{height:46px;background:linear-gradient(90deg,var(--footer-from),var(--footer-to));
-display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rgba(11,53,89,.45);}
-.footer-bar .text{color:#fff;font-weight:800;text-shadow:0 0 8px rgba(255,255,255,.06);font-size:14px;}
-</style>
+.main{flex:1;min-height:70vh;margin-right:calc(var(--sidebar-w) + 24px); padding-top: 10px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:24px;}
 
-<!-- ===== Login Overlay & Basic Client Protection ===== -->
-<style>
-  /* overlay */
-  #loginOverlay{
-    position:fixed;inset:0;
-    display:flex;align-items:center;justify-content:center;
-    background:linear-gradient(135deg,rgba(2,6,23,0.96),rgba(11,25,60,0.95));
-    z-index:99999;
-    transition:opacity .4s ease;
-  }
-  #loginBox{
-    width:360px;max-width:94%;
-    background:#0f1724;
-    border-radius:12px;
-    padding:22px 20px 20px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.6);
-    color:#fff;text-align:center;
-    font-family:'Tajawal',sans-serif;
-  }
-  /* logo + title */
-  .logoHeader{
-    display:flex;align-items:center;justify-content:center;gap:10px;
-    margin-bottom:10px;
-  }
-  .logoCircle{
-    width:38px;height:38px;border-radius:50%;
-    background:linear-gradient(135deg,#007BFF,#5B21B6);
-    display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:20px;color:#fff;
-    box-shadow:0 0 10px rgba(0,123,255,0.4);
-  }
-  .logoHeader span{
-    font-size:20px;font-weight:700;color:#fff;letter-spacing:.5px;
-  }
-  #loginBox h3{
-    margin:0 0 14px;font-size:17px;color:#FFD700;
-    text-shadow:0 0 8px rgba(255,215,0,0.12);
-  }
-  #loginBox input{
-    box-sizing:border-box;
-    width:100%;height:44px;
-    padding:0 12px;
-    border-radius:8px;
-    border:1px solid rgba(255,255,255,0.15);
-    background-color:rgba(255,255,255,0.05);
-    color:#fff;margin:0 0 14px;
-    outline:none;font-size:15px;
-    direction:ltr;text-align:left;line-height:44px;
-    caret-color:#4ea8ff;
-    transition:border .18s ease,box-shadow .18s ease,background .12s ease;
-  }
-  #loginBox input::placeholder{color:rgba(255,255,255,0.65);}
-  #loginBox input:focus{
-    border-color:#4ea8ff;
-    box-shadow:0 0 6px rgba(78,168,255,0.38);
-    background-color:rgba(255,255,255,0.07);
-  }
-  #loginBox button{
-    padding:10px 12px;width:100%;
-    border-radius:8px;border:none;cursor:pointer;
-    font-weight:700;font-size:15px;color:#fff;
-    background:linear-gradient(90deg,#4ea8ff,#7c3aed);
-    transition:transform .15s ease,box-shadow .15s ease;
-    box-shadow:0 3px 8px rgba(0,0,0,0.25);
-  }
-  #loginBox button:hover{
-    transform:translateY(-1px);
-    box-shadow:0 4px 10px rgba(0,0,0,0.35);
-  }
-  #loginBox button:active{
-    transform:translateY(1px);
-    box-shadow:0 2px 6px rgba(0,0,0,0.2);
-  }
-  #loginMsg{color:#ffb3b3;font-size:13px;min-height:18px;margin-top:8px;}
-  #protectedApp{display:none;opacity:0;transition:opacity .6s ease;}
+@media(max-width:1024px){.main{margin-right:calc(var(--sidebar-w) + 24px)}}
+@media(max-width:768px){
+  .app{flex-direction:column-reverse;padding-top:70px;}
+  .sidebar{position:relative;top:auto;right:auto;width:100%; margin-bottom: 24px;}
+  .main{margin-right:0}
+}
+
+.card{border-radius:14px;border:1px solid var(--border-color);display:flex;flex-direction:column;
+overflow:hidden;cursor:pointer;min-height:180px;transition:transform .25s ease,box-shadow .25s ease,opacity .35s;
+background:var(--card);box-shadow:0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+opacity:0;transform:translateY(10px);}
+.card.visible{opacity:1;transform:translateY(0);}
+.card:hover{transform:translateY(-5px);box-shadow:0 10px 15px -3px var(--shadow-color-hover), 0 4px 6px -4px var(--shadow-color-hover);}
+.card-title{text-align:center;font-weight:800;font-size:16px;color:var(--accent1);
+padding:12px 10px;border-bottom:1px solid var(--border-color);}
+.card-content{padding:14px;flex:1;overflow:hidden;display:flex;flex-direction:column;}
+.frame{background:var(--bg1);border-radius:8px;padding:12px;flex:1;
+color:var(--text);font-size:14px;line-height:1.7;overflow:hidden;
+display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;text-overflow:ellipsis;}
+.card-footer{padding:10px 14px;font-size:12px;color:var(--muted);
+border-top:1px solid var(--border-color); transition: color .2s ease, background .2s ease;}
+.card-footer.copied { color: white; background: var(--success); text-align:center; font-weight: 700;}
+.empty{grid-column: 1 / -1; text-align:center;padding:40px;color:var(--muted);
+background:var(--card);border-radius:14px; border: 1px solid var(--border-color);}
+
+.footer-wrapper{position:fixed;left:0;right:0;bottom:0;z-index:100;}
+.footer-bar{height:50px;background:linear-gradient(90deg,var(--footer-from),var(--footer-to));
+display:flex;align-items:center;justify-content:center;box-shadow:0 -5px 20px rgba(0,0,0, .3);}
+.footer-bar .text{color:white;font-weight:700;font-size:14px;}
+
+/* Login Styles */
+#loginOverlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+background:linear-gradient(135deg,rgba(2,6,23,0.96),rgba(11,25,60,0.95));z-index:99999;transition:opacity .4s ease;}
+#loginBox{width:360px;max-width:94%;background:#0f1724;border-radius:12px;padding:22px 20px 20px;
+box-shadow:0 10px 40px rgba(0,0,0,0.6);color:#fff;text-align:center;font-family:'Tajawal',sans-serif;}
+.logoHeader{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;}
+.logoCircle{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#007BFF,#5B21B6);
+display:flex;align-items:center;justify-content:center;font-weight:800;font-size:20px;color:#fff;box-shadow:0 0 10px rgba(0,123,255,0.4);}
+.logoHeader span{font-size:20px;font-weight:700;color:#fff;letter-spacing:.5px;}
+#loginBox h3{margin:0 0 14px;font-size:17px;color:#FFD700;text-shadow:0 0 8px rgba(255,215,0,0.12);}
+#loginBox input{box-sizing:border-box;width:100%;height:44px;padding:0 12px;border-radius:8px;
+border:1px solid rgba(255,255,255,0.15);background-color:rgba(255,255,255,0.05);color:#fff;margin:0 0 14px;
+outline:none;font-size:15px;direction:ltr;text-align:left;line-height:44px;caret-color:#4ea8ff;
+transition:border .18s ease,box-shadow .18s ease,background .12s ease;}
+#loginBox input::placeholder{color:rgba(255,255,255,0.65);}
+#loginBox input:focus{border-color:#4ea8ff;box-shadow:0 0 6px rgba(78,168,255,0.38);background-color:rgba(255,255,255,0.07);}
+#loginBox button{padding:10px 12px;width:100%;border-radius:8px;border:none;cursor:pointer;
+font-weight:700;font-size:15px;color:#fff;background:linear-gradient(90deg,#4ea8ff,#7c3aed);
+transition:transform .15s ease,box-shadow .15s ease;box-shadow:0 3px 8px rgba(0,0,0,0.25);}
+#loginBox button:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(0,0,0,0.35);}
+#loginBox button:active{transform:translateY(1px);box-shadow:0 2px 6px rgba(0,0,0,0.2);}
+#loginMsg{color:#ffb3b3;font-size:13px;min-height:18px;margin-top:8px;}
+#protectedApp{display:none;opacity:0;transition:opacity .6s ease;}
 </style>
 </head>
 <body data-theme="dark">
@@ -198,67 +170,15 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
       <div class="logoCircle">C</div>
       <span>Canned Tool</span>
     </div>
-    <h3>Login — Canned Tool</h3>
+    <h3>تسجيل الدخول</h3>
     <input id="loginPwd" type="password" placeholder="Enter Password" autocomplete="off">
     <button id="loginBtn">Login</button>
     <div id="loginMsg"></div>
     <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.6);">
-      Protected By Password
+      محمية بكلمة مرور
     </div>
   </div>
 </div>
-
-<script>
-  // ===== كلمة المرور الجديدة =====
-  const FIXED_PASSWORD = 'Chat2025';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('loginOverlay');
-    const btn = document.getElementById('loginBtn');
-    const pwd = document.getElementById('loginPwd');
-    const msg = document.getElementById('loginMsg');
-    const app = document.getElementById('protectedApp');
-
-    pwd.focus();
-
-    function unlock() {
-      if (pwd.value === FIXED_PASSWORD) {
-        overlay.style.opacity = '0';
-        setTimeout(() => overlay.style.display = 'none', 400);
-        app.style.display = 'block';
-        setTimeout(() => app.style.opacity = '1', 50);
-        sessionStorage.setItem('candat_unlocked', '1');
-      } else {
-        msg.textContent = 'كلمة المرور خاطئة';
-        pwd.value = '';
-        pwd.focus();
-      }
-    }
-
-    btn.addEventListener('click', unlock);
-    pwd.addEventListener('keydown', (e) => { if (e.key === 'Enter') unlock(); });
-
-    // إذا تم تسجيل الدخول مسبقًا في هذه الجلسة
-    if (sessionStorage.getItem('candat_unlocked') === '1') {
-      overlay.style.display = 'none';
-      app.style.display = 'block';
-      app.style.opacity = '1';
-    }
-
-    // ===== حماية أساسية (منع النسخ والأدوات) =====
-    document.addEventListener('contextmenu', (e) => {
-      if (!overlay || overlay.style.display === 'none') e.preventDefault();
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    });
-  });
-</script>
-<!-- ===== نهاية شاشة تسجيل الدخول ===== -->
 
 <div id="protectedApp">
 
@@ -273,7 +193,7 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
 <!-- Header -->
 <div class="header-wrap">
   <div class="marquee">
-    <span class="text">⚠️ مش محتاج أقولك إن استخدامك لأي كاند هو على مسؤوليتك الشخصية ولازم دايمًا تتأكد من الويكي ⚠️</span>
+    <span class="text">⚠️ تذكر دائمًا: استخدامك لهذه الأداة على مسؤوليتك الشخصية، ويجب التأكد من الويكي.</span>
   </div>
 </div>
 
@@ -282,30 +202,21 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
 
 <!-- Layout Wrapper -->
 <div class="app">
-
   <!-- Sidebar -->
   <div class="sidebar">
-    <div class="upload-row">
-      <button class="upload-btn" id="uploadBtn">📤 رفع ملف Excel</button>
-      <input type="file" id="fileInput" accept=".xlsx" style="display:none">
-    </div>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="🔍 ابحث داخل كل الشيتات...">
+      <span style="color: var(--muted); font-size: 18px;">🔍</span>
+      <input type="text" id="searchInput" placeholder="search here...">
     </div>
     <div class="sheet-list" id="sheetList"></div>
   </div>
 
   <!-- Main Content -->
   <div class="main">
-    <div class="main-header">
-      <h2 id="sheetTitle">📋 اختر صفحة من القائمة</h2>
-      <span class="instructions">اضغط على أي مربع لنسخ الـ Content فقط</span>
-    </div>
     <div class="grid" id="cardsGrid">
-      <div class="empty">لا توجد نتائج مطابقة 🔍</div>
+      <div class="empty">اختر شيت من القائمة للبدء 🚀</div>
     </div>
   </div>
-
 </div>
 
 <!-- Footer -->
@@ -315,32 +226,64 @@ display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rg
   </div>
 </div>
 
-<!-- Click sound Base64 -->
-<audio id="clickSound">
-  <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..."
-          type="audio/mp3">
+<!-- Click sound -->
+<audio id="clickSound" preload="auto">
+  <source src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA..." type="audio/mp3">
 </audio>
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+
+  // --- Right-Click Protection ---
+  document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
+
+  // --- LOGIN LOGIC ---
+  const FIXED_PASSWORD = 'Geek2025';
+  const overlay = document.getElementById('loginOverlay');
+  const btn = document.getElementById('loginBtn');
+  const pwd = document.getElementById('loginPwd');
+  const msg = document.getElementById('loginMsg');
+  const app = document.getElementById('protectedApp');
+
+  pwd.focus();
+  function unlock() {
+    if (pwd.value === FIXED_PASSWORD) {
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.style.display = 'none', 400);
+      app.style.display = 'block';
+      setTimeout(() => app.style.opacity = '1', 50);
+      sessionStorage.setItem('candat_unlocked', '1');
+    } else {
+      msg.textContent = 'كلمة المرور خاطئة';
+      pwd.value = '';
+      pwd.focus();
+    }
+  }
+  btn.addEventListener('click', unlock);
+  pwd.addEventListener('keydown', (e) => { if (e.key === 'Enter') unlock(); });
+  if (sessionStorage.getItem('candat_unlocked') === '1') {
+    overlay.style.display = 'none';
+    app.style.display = 'block';
+    app.style.opacity = '1';
+  }
+
+  // --- APP LOGIC ---
   const splash = document.getElementById("splash");
   const sheetList = document.getElementById("sheetList");
   const cardsGrid = document.getElementById("cardsGrid");
-  const fileInput = document.getElementById("fileInput");
-  const uploadBtn = document.getElementById("uploadBtn");
   const searchInput = document.getElementById("searchInput");
   const clickSound = document.getElementById("clickSound");
   const themeToggle = document.getElementById("themeToggle");
-  const sheetTitle = document.getElementById("sheetTitle");
 
   let workbookData = {};
   let currentSheet = null;
 
-  // إخفاء شاشة التحميل
   setTimeout(() => splash.style.opacity = "0", 800);
   setTimeout(() => splash.style.display = "none", 1200);
 
-  // تبديل الثيم
   themeToggle.addEventListener("click", () => {
     const current = document.body.getAttribute("data-theme");
     const next = current === "dark" ? "light" : "dark";
@@ -348,7 +291,6 @@ document.addEventListener("DOMContentLoaded", () => {
     themeToggle.textContent = next === "dark" ? "🌙" : "☀️";
   });
 
-  // تحميل تلقائي من نفس المجلد (لـ GitHub Pages)
   fetch('candat_data.xlsx')
     .then(resp => {
       if (!resp.ok) throw new Error("File not found");
@@ -358,42 +300,31 @@ document.addEventListener("DOMContentLoaded", () => {
       const wb = XLSX.read(buffer, { type: "array" });
       handleWorkbook(wb);
     })
-    .catch(() => console.log("لم يتم العثور على الملف - يمكنك رفعه يدويًا"));
+    .catch((error) => {
+        console.error("لم يتم العثور على الملف 'candat_data.xlsx' أو حدث خطأ أثناء تحميله:", error);
+    });
 
-  // رفع يدوي
-  uploadBtn.addEventListener("click", () => fileInput.click());
-  fileInput.addEventListener("change", e => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = evt => {
-      const data = new Uint8Array(evt.target.result);
-      const wb = XLSX.read(data, { type: "array" });
-      handleWorkbook(wb);
-    };
-    reader.readAsArrayBuffer(file);
-  });
-
-  // معالجة ملف Excel
   function handleWorkbook(wb) {
     workbookData = {};
     wb.SheetNames.forEach(name => {
       const ws = wb.Sheets[name];
       const rows = XLSX.utils.sheet_to_json(ws, { header: 1 });
       const items = [];
-      // تجاهل الصف الأول (Name / Content)
       for (let i = 1; i < rows.length; i++) {
-        if (rows[i][0] && rows[i][1]) {
-          items.push({ name: rows[i][0], content: rows[i][1], sheet: name });
+        if (rows[i] && rows[i][0] && rows[i][1]) {
+          items.push({ name: String(rows[i][0]), content: String(rows[i][1]), sheet: name });
         }
       }
       workbookData[name] = items;
     });
     renderSheetList(wb.SheetNames);
-    if (wb.SheetNames.length) showSheet(wb.SheetNames[0]);
+    if (wb.SheetNames.length > 0) {
+        showSheet(wb.SheetNames[0]);
+    } else {
+        cardsGrid.innerHTML = '<div class="empty">الملف الذي تم تحميله فارغ أو لا يحتوي على شيتات.</div>';
+    }
   }
 
-  // عرض أسماء الشيتات في القائمة
   function renderSheetList(names) {
     sheetList.innerHTML = "";
     names.forEach(name => {
@@ -405,99 +336,95 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // عرض الشيت المحدد
   function showSheet(name) {
     currentSheet = name;
+    searchInput.value = '';
     document.querySelectorAll(".sheet-item").forEach(el => el.classList.remove("active"));
-    [...sheetList.children].find(el => el.textContent === name)?.classList.add("active");
-    sheetTitle.textContent = `📄 شيت: ${name}`;
-    renderCards(workbookData[name]);
+    const activeSheetElement = [...sheetList.children].find(el => el.textContent === name);
+    if (activeSheetElement) {
+        activeSheetElement.classList.add("active");
+    }
+    renderCards(workbookData[name] || []);
   }
 
-  // عرض الكروت
   function renderCards(items) {
     cardsGrid.innerHTML = "";
     if (!items || !items.length) {
-      cardsGrid.innerHTML = '<div class="empty">لا توجد نتائج مطابقة 🔍</div>';
+      const query = searchInput.value.trim();
+      const message = query ? `لا توجد نتائج مطابقة لبحثك عن: "${query}" 🔍` : `هذا الشيت فارغ. 📂`;
+      cardsGrid.innerHTML = `<div class="empty">${message}</div>`;
       return;
     }
     items.forEach((item, index) => {
       const card = document.createElement("div");
       card.className = "card";
 
-      const hasNewlines = (item.content.match(/\n/g) || []).length > 0;
-      const formatted = hasNewlines
-        ? item.content.replace(/\n/g, "<p>&nbsp;</p>")
-        : item.content;
+      const displayContent = item.content.replace(/\n/g, "<br>");
 
       card.innerHTML = `
         <div class="card-title">${item.name}</div>
         <div class="card-content">
-          <div class="frame">${formatted}</div>
+          <div class="frame">${displayContent}</div>
         </div>
-        <div class="card-footer">📄 من شيت: ${item.sheet}</div>`;
+        <div class="card-footer" data-original-text="📄 من شيت: ${item.sheet}">📄 من شيت: ${item.sheet}</div>`;
 
       card.addEventListener("click", () => {
-        copyText(item.content); // Always copy raw content
+        copyText(item.content);
         playClick();
+        
+        const footer = card.querySelector('.card-footer');
+        const originalText = footer.getAttribute('data-original-text');
+        footer.textContent = "✅ تم النسخ!";
+        footer.classList.add('copied');
+        setTimeout(() => {
+          footer.textContent = originalText;
+          footer.classList.remove('copied');
+        }, 1500);
       });
 
       cardsGrid.appendChild(card);
-      setTimeout(() => card.classList.add("visible"), 100 + index * 40);
+      setTimeout(() => card.classList.add("visible"), 50 + index * 30);
     });
   }
 
-  // النسخ
   function copyText(text) {
-    const temp = document.createElement("textarea");
-    temp.value = text;
-    document.body.appendChild(temp);
-    temp.select();
-    document.execCommand("copy");
-    document.body.removeChild(temp);
+    navigator.clipboard.writeText(text).catch(err => {
+      console.warn("فشل النسخ عبر Navigator API، سيتم استخدام الطريقة البديلة.");
+      const temp = document.createElement("textarea");
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand("copy");
+      document.body.removeChild(temp);
+    });
   }
 
-  // الصوت
   function playClick() {
     clickSound.currentTime = 0;
-    clickSound.play();
+    clickSound.play().catch(e => console.log("لم يتمكن المتصفح من تشغيل الصوت تلقائياً."));
   }
 
-// بحث عالمي عبر كل الشيتات
-searchInput.addEventListener("input", () => {
-  const q = (searchInput.value || '').trim().toLowerCase();
+  searchInput.addEventListener("input", () => {
+    const q = (searchInput.value || '').trim().toLowerCase();
 
-  if (!q) {
-    if (currentSheet) {
-      renderCards(workbookData[currentSheet] || []);
-      sheetTitle.textContent = `📄 شيت: ${currentSheet}`;
-    } else {
-      cardsGrid.innerHTML = '<div class="empty">اختر شيت أو ارفع ملفًا للبدء</div>';
-      sheetTitle.textContent = `📋 اختر صفحة من القائمة`;
+    if (!q) {
+      if (currentSheet) showSheet(currentSheet);
+      return;
     }
-    return;
-  }
-
-  const results = [];
-  Object.keys(workbookData).forEach(sheetName => {
-    (workbookData[sheetName] || []).forEach(item => {
-      const hay = ((item.name || '') + ' ' + (item.content || '')).toString().toLowerCase();
-      if (hay.includes(q)) {
-        const copy = Object.assign({}, item);
-        copy.sheet = sheetName;
-        results.push(copy);
-      }
+    
+    document.querySelectorAll(".sheet-item").forEach(el => el.classList.remove("active"));
+    const results = [];
+    Object.keys(workbookData).forEach(sheetName => {
+      (workbookData[sheetName] || []).forEach(item => {
+        const hay = (item.name + ' ' + item.content).toLowerCase();
+        if (hay.includes(q)) {
+          results.push({ ...item, sheet: sheetName });
+        }
+      });
     });
-  });
-
-  if (!results.length) {
-    cardsGrid.innerHTML = '<div class="empty">لا توجد نتائج مطابقة 🔍</div>';
-    sheetTitle.textContent = `نتائج البحث عن: "${searchInput.value.trim()}"`;
-  } else {
-    sheetTitle.textContent = `نتائج البحث عن: "${searchInput.value.trim()}" (${results.length})`;
+    
     renderCards(results);
-  }
-});
+  });
 });
 </script>
 
