@@ -122,21 +122,33 @@ margin:0 auto;box-sizing:border-box;}
 .sheet-list::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb); border-radius: 20px; border: 2px solid var(--card); }
 .sheet-list::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
 
-/* *** FINAL STYLE FOR SHEET ITEMS *** */
+/* *** FINAL FINAL STYLE FOR SHEET ITEMS *** */
 .sheet-item{
-  padding: 12px 14px;
-  margin-right: 8px; /* Added margin for alignment */
+  padding: 10px 14px;
+  margin-right: 8px;
   border-radius: 10px;
   cursor: pointer;
   font-weight: 700;
-  text-align: right; /* Reverted to right-align for visibility */
   color: var(--text);
   border: 1px solid transparent;
   transition: background .2s ease, border-color .2s ease, transform 0.2s ease;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* Flexbox for perfect vertical alignment */
+  display: flex;
+  align-items: center;
+  min-height: 2.5em; /* Ensures consistent height */
 }
+/* Handling English Text specifically */
+.sheet-item[dir="ltr"] {
+    justify-content: flex-start;
+    text-align: left;
+}
+/* Default for Arabic Text */
+.sheet-item {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+
 .sheet-item:hover { background: var(--bg1); transform: translateX(-4px); }
 .sheet-item.active{
   background:linear-gradient(90deg,rgba(78,168,255,.15),rgba(124,58,237,.12));
@@ -379,6 +391,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const btn = document.createElement("div");
       btn.className = "sheet-item";
       btn.textContent = name;
+      
+      // *** MODIFICATION: Detect if text is primarily English and set direction ***
+      // A simple regex to check for English characters.
+      if (/^[a-zA-Z &]+$/.test(name)) {
+          btn.setAttribute('dir', 'ltr');
+      }
+
       btn.addEventListener("click", () => showSheet(name));
       sheetList.appendChild(btn);
     });
