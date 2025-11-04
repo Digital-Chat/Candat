@@ -111,202 +111,156 @@ background:rgba(255,255,255,.02);border-radius:8px;}
 display:flex;align-items:center;justify-content:center;box-shadow:0 -6px 20px rgba(11,53,89,.45);}
 .footer-bar .text{color:#fff;font-weight:800;text-shadow:0 0 8px rgba(255,255,255,.06);font-size:14px;}
 </style>
-</head>
-<!-- ===== Login Overlay & Basic Client Protection (place near top of your HTML) ===== -->
+
+<!-- ===== Login Overlay & Basic Client Protection ===== -->
 <style>
-  /* login overlay styles */
-  #loginOverlay {
-    position:fixed; inset:0; background:linear-gradient(180deg, rgba(2,6,23,0.95), rgba(11,25,60,0.95));
-    z-index:99999; display:flex; align-items:center; justify-content:center; padding:20px;
+  /* overlay */
+  #loginOverlay{
+    position:fixed;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,rgba(2,6,23,0.96),rgba(11,25,60,0.95));
+    z-index:99999;
+    transition:opacity .4s ease;
   }
-  /* ====== إعادة تعيين آمنة لصندوق الدخول والعنوان والحقل ====== */
-#loginBox {
-  box-sizing: border-box;        /* مهم حتى padding يحتسب داخل العرض */
-  width: 360px;
-  max-width: 94%;
-  background: #0f1724;
-  border-radius: 12px;
-  padding: 22px 20px 18px 20px;  /* مساحة كافية فوق الحقل لتجنب التداخل */
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  color: #fff;
-  text-align: center;
-  font-family: 'Tajawal', sans-serif;
-}
-
-/* عنوان الصندوق */
-#loginBox h3 {
-  margin: 0 0 14px 0;            /* مسافة واضحة بين العنوان والحقل */
-  font-size: 18px;
-  color: #FFD700;
-  text-shadow:0 0 8px rgba(255,215,0,0.12);
-}
-
-/* الحقل نفسه — تخلصنا من display:flex لأن input عنصر بديل */
-#loginBox input {
-  box-sizing: border-box;        /* يجعل height و padding محسوبين معاً */
-  width: 100%;
-  height: 44px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background-color: rgba(255,255,255,0.04);
-  color: #fff;
-  margin: 0 0 14px 0;            /* لا تضع margin-top سلبية */
-  outline: none;
-  font-size: 15px;
-  font-family: 'Tajawal', sans-serif;
-  direction: ltr;
-  text-align: left;
-  line-height: 44px;             /* يضمن محاذاة رأسية سليمة للنص */
-  caret-color: #4ea8ff;
-  transition: border .18s ease, box-shadow .18s ease, background .12s ease;
-}
-
-#loginBox input::placeholder { color: rgba(255,255,255,0.65); }
-
-#loginBox input:focus{
-  border-color: #4ea8ff;
-  box-shadow: 0 0 6px rgba(78,168,255,0.38);
-  background-color: rgba(255,255,255,0.07);
-}
-  /* ====== إعادة تعيين آمنة لصندوق الدخول والعنوان والحقل ====== */
-#loginBox {
-  box-sizing: border-box;        /* مهم حتى padding يحتسب داخل العرض */
-  width: 360px;
-  max-width: 94%;
-  background: #0f1724;
-  border-radius: 12px;
-  padding: 22px 20px 18px 20px;  /* مساحة كافية فوق الحقل لتجنب التداخل */
-  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  color: #fff;
-  text-align: center;
-  font-family: 'Tajawal', sans-serif;
-}
-
-/* عنوان الصندوق */
-#loginBox h3 {
-  margin: 0 0 14px 0;            /* مسافة واضحة بين العنوان والحقل */
-  font-size: 18px;
-  color: #FFD700;
-  text-shadow:0 0 8px rgba(255,215,0,0.12);
-}
-
-/* الحقل نفسه — تخلصنا من display:flex لأن input عنصر بديل */
-#loginBox input {
-  box-sizing: border-box;        /* يجعل height و padding محسوبين معاً */
-  width: 100%;
-  height: 44px;
-  padding: 0 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background-color: rgba(255,255,255,0.04);
-  color: #fff;
-  margin: 0 0 14px 0;            /* لا تضع margin-top سلبية */
-  outline: none;
-  font-size: 15px;
-  font-family: 'Tajawal', sans-serif;
-  direction: ltr;
-  text-align: left;
-  line-height: 44px;             /* يضمن محاذاة رأسية سليمة للنص */
-  caret-color: #4ea8ff;
-  transition: border .18s ease, box-shadow .18s ease, background .12s ease;
-}
-
-#loginBox input::placeholder { color: rgba(255,255,255,0.65); }
-
-#loginBox input:focus{
-  border-color: #4ea8ff;
-  box-shadow: 0 0 6px rgba(78,168,255,0.38);
-  background-color: rgba(255,255,255,0.07);
-}
+  #loginBox{
+    width:360px;max-width:94%;
+    background:#0f1724;
+    border-radius:12px;
+    padding:22px 20px 20px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.6);
+    color:#fff;text-align:center;
+    font-family:'Tajawal',sans-serif;
+  }
+  /* logo + title */
+  .logoHeader{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    margin-bottom:10px;
+  }
+  .logoCircle{
+    width:38px;height:38px;border-radius:50%;
+    background:linear-gradient(135deg,#007BFF,#5B21B6);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:20px;color:#fff;
+    box-shadow:0 0 10px rgba(0,123,255,0.4);
+  }
+  .logoHeader span{
+    font-size:20px;font-weight:700;color:#fff;letter-spacing:.5px;
+  }
+  #loginBox h3{
+    margin:0 0 14px;font-size:17px;color:#FFD700;
+    text-shadow:0 0 8px rgba(255,215,0,0.12);
+  }
+  #loginBox input{
+    box-sizing:border-box;
+    width:100%;height:44px;
+    padding:0 12px;
+    border-radius:8px;
+    border:1px solid rgba(255,255,255,0.15);
+    background-color:rgba(255,255,255,0.05);
+    color:#fff;margin:0 0 14px;
+    outline:none;font-size:15px;
+    direction:ltr;text-align:left;line-height:44px;
+    caret-color:#4ea8ff;
+    transition:border .18s ease,box-shadow .18s ease,background .12s ease;
+  }
+  #loginBox input::placeholder{color:rgba(255,255,255,0.65);}
+  #loginBox input:focus{
+    border-color:#4ea8ff;
+    box-shadow:0 0 6px rgba(78,168,255,0.38);
+    background-color:rgba(255,255,255,0.07);
+  }
+  #loginBox button{
+    padding:10px 12px;width:100%;
+    border-radius:8px;border:none;cursor:pointer;
+    font-weight:700;font-size:15px;color:#fff;
+    background:linear-gradient(90deg,#4ea8ff,#7c3aed);
+    transition:transform .15s ease,box-shadow .15s ease;
+    box-shadow:0 3px 8px rgba(0,0,0,0.25);
+  }
+  #loginBox button:hover{
+    transform:translateY(-1px);
+    box-shadow:0 4px 10px rgba(0,0,0,0.35);
+  }
+  #loginBox button:active{
+    transform:translateY(1px);
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  }
+  #loginMsg{color:#ffb3b3;font-size:13px;min-height:18px;margin-top:8px;}
+  #protectedApp{display:none;opacity:0;transition:opacity .6s ease;}
 </style>
+</head>
+<body data-theme="dark">
 
-<div id="loginOverlay" aria-hidden="false">
-  <div id="loginBox" role="dialog" aria-modal="true" aria-label="Login">
-    <h3>Login — Canned Tool</h3>
-    <input id="loginPwd" type="password" dir="ltr" placeholder="Enter Password" autocomplete="off" />
+<!-- Login Overlay -->
+<div id="loginOverlay">
+  <div id="loginBox">
+    <div class="logoHeader">
+      <div class="logoCircle">C</div>
+      <span>Canned Tool</span>
+    </div>
+    <h3>تسجيل الدخول</h3>
+    <input id="loginPwd" type="password" placeholder="Enter Password" autocomplete="off">
     <button id="loginBtn">Login</button>
     <div id="loginMsg"></div>
-    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.6);">Protected By Password</div>
+    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.6);">
+      محمية بكلمة مرور
+    </div>
   </div>
 </div>
 
 <script>
-  // ===== CONFIRM / ADJUST PASSWORD HERE =====
-  const FIXED_PASSWORD = 'Chat2025'; // غيّرها لو احتجت
+  // ===== كلمة المرور الجديدة =====
+  const FIXED_PASSWORD = 'Geek2025';
 
-  // hide the actual app initially (wrap your app in #protectedApp)
-  // **Important**: you need to wrap the whole tool markup in <div id="protectedApp"> ... </div>
-  // or if your HTML already has a main root, set its id accordingly and remove the overlay when correct.
   document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('loginOverlay');
     const btn = document.getElementById('loginBtn');
     const pwd = document.getElementById('loginPwd');
     const msg = document.getElementById('loginMsg');
+    const app = document.getElementById('protectedApp');
 
-    // focus
     pwd.focus();
 
     function unlock() {
       if (pwd.value === FIXED_PASSWORD) {
-        // remove overlay and show app
         overlay.style.opacity = '0';
-        setTimeout(()=> overlay.style.display = 'none', 220);
-        // reveal protected app container if exists
-        const protectedEl = document.getElementById('protectedApp');
-        if (protectedEl) protectedEl.style.display = 'block';
-        // optionally set a flag in sessionStorage so page reload in same session stays unlocked
+        setTimeout(() => overlay.style.display = 'none', 400);
+        app.style.display = 'block';
+        setTimeout(() => app.style.opacity = '1', 50);
         sessionStorage.setItem('candat_unlocked', '1');
-        msg.textContent = '';
       } else {
-        msg.textContent = 'Wrong Password';
+        msg.textContent = 'كلمة المرور خاطئة';
         pwd.value = '';
         pwd.focus();
       }
     }
 
     btn.addEventListener('click', unlock);
-    pwd.addEventListener('keydown', (e)=> { if (e.key === 'Enter') unlock(); });
+    pwd.addEventListener('keydown', (e) => { if (e.key === 'Enter') unlock(); });
 
-    // if previously unlocked in this tab session — skip login
+    // إذا تم تسجيل الدخول مسبقًا في هذه الجلسة
     if (sessionStorage.getItem('candat_unlocked') === '1') {
       overlay.style.display = 'none';
-      const protectedEl = document.getElementById('protectedApp');
-      if (protectedEl) protectedEl.style.display = 'block';
+      app.style.display = 'block';
+      app.style.opacity = '1';
     }
 
-    // ===== Basic client-side protection (deterrents) =====
-    // Disable right-click
+    // ===== حماية أساسية (منع النسخ والأدوات) =====
     document.addEventListener('contextmenu', (e) => {
-      // allow if overlay active (so admin can still inspect if needed), otherwise prevent
       if (!overlay || overlay.style.display === 'none') e.preventDefault();
     });
 
-    // Block common dev-tools shortcuts
     document.addEventListener('keydown', function(e) {
-      // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
       if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) || (e.ctrlKey && e.key === 'U')) {
         e.preventDefault();
         e.stopPropagation();
       }
     });
-
-    // Also try to detect when devtools opened (best-effort) and hide overlay (deterrent)
-    let devtoolsOpened = false;
-    const threshold = 160;
-    setInterval(function() {
-      const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-      const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-      if ((widthThreshold || heightThreshold) && !devtoolsOpened) {
-        devtoolsOpened = true;
-        console.warn('DevTools detected — access is discouraged');
-      }
-    }, 1000);
   });
 </script>
-<!-- ===== end login overlay ===== -->
-<div id="protectedApp" style="display:none;">
-<body data-theme="dark">
+<!-- ===== نهاية شاشة تسجيل الدخول ===== -->
+
+<div id="protectedApp">
 
 <!-- Splash Screen -->
 <div class="splash" id="splash">
@@ -472,7 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
       card.className = "card";
 
       const hasNewlines = (item.content.match(/\n/g) || []).length > 0;
-      const formatted = hasNewlines 
+      const formatted = hasNewlines
         ? item.content.replace(/\n/g, "<p>&nbsp;</p>")
         : item.content;
 
@@ -484,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="card-footer">📄 من شيت: ${item.sheet}</div>`;
 
       card.addEventListener("click", () => {
-        copyText(hasNewlines ? formatted : item.content);
+        copyText(item.content); // Always copy raw content
         playClick();
       });
 
@@ -509,11 +463,10 @@ document.addEventListener("DOMContentLoaded", () => {
     clickSound.play();
   }
 
-// بحث عالمي عبر كل الشيتات — يعرض اسم الشيت تحت كل كارت
+// بحث عالمي عبر كل الشيتات
 searchInput.addEventListener("input", () => {
   const q = (searchInput.value || '').trim().toLowerCase();
 
-  // لو الحقل فاضي: عرض الشيت الحالي (أو رسالة لو مفيش شيت محدد)
   if (!q) {
     if (currentSheet) {
       renderCards(workbookData[currentSheet] || []);
@@ -525,32 +478,29 @@ searchInput.addEventListener("input", () => {
     return;
   }
 
-  // نجمع كل النتائج من كل الشيتات
   const results = [];
   Object.keys(workbookData).forEach(sheetName => {
     (workbookData[sheetName] || []).forEach(item => {
       const hay = ((item.name || '') + ' ' + (item.content || '')).toString().toLowerCase();
       if (hay.includes(q)) {
         const copy = Object.assign({}, item);
-        copy.sheet = sheetName; // ضمن أن خاصية sheet موجودة
+        copy.sheet = sheetName;
         results.push(copy);
       }
     });
   });
 
-  // عرض النتائج
   if (!results.length) {
     cardsGrid.innerHTML = '<div class="empty">لا توجد نتائج مطابقة 🔍</div>';
     sheetTitle.textContent = `نتائج البحث عن: "${searchInput.value.trim()}"`;
   } else {
-    // عنوان البحث
     sheetTitle.textContent = `نتائج البحث عن: "${searchInput.value.trim()}" (${results.length})`;
-    // عرض النتائج (تأكد أن renderCards يتعامل مع عناصر تحتوي على .sheet)
     renderCards(results);
   }
 });
 });
 </script>
+
+</div>
 </body>
 </html>
-</div>
