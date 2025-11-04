@@ -26,6 +26,8 @@
   --shadow-color: rgba(99, 102, 241, 0.08);
   --shadow-color-hover: rgba(99, 102, 241, 0.15);
   --search-bg: #eef2f7;
+  --scrollbar-thumb: #cdd5e0;
+  --scrollbar-track: transparent;
 }
 [data-theme="dark"]{
   --bg1: #0f172a;
@@ -37,6 +39,8 @@
   --shadow-color: rgba(0,0,0,0.2);
   --shadow-color-hover: rgba(0,0,0,0.35);
   --search-bg: #0f172a;
+  --scrollbar-thumb: #334155;
+  --scrollbar-track: transparent;
 }
 html,body{
   height:100%; margin:0; padding:0; font-family:'Tajawal',sans-serif; direction:rtl;
@@ -67,15 +71,21 @@ border:none;color:white;padding:6px 8px;border-radius:8px;cursor:pointer;font-we
 transition: background .2s ease, transform .2s ease;}
 .theme-toggle:hover { background: rgba(255,255,255,0.1); transform: scale(1.1); }
 
-
 /* Layout */
 .app{display:flex;flex-direction:row-reverse;gap:24px;
 padding: 70px 24px 80px 24px;
-max-width:1400px;margin:0 auto;box-sizing:border-box;}
-.sidebar{position:fixed;top:70px; right:24px;width:var(--sidebar-w);
-background: var(--card);
-border-radius:14px;padding:16px;box-shadow:0 10px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
-border:1px solid var(--border-color);z-index:110;}
+max-width:1600px;
+margin:0 auto;box-sizing:border-box;}
+.sidebar{
+  position:fixed;
+  top: 70px; right:24px;width:var(--sidebar-w);
+  height: calc(100vh - 70px - 80px); /* Full height minus header and footer space */
+  display: flex; flex-direction: column;
+  background: var(--card);
+  border-radius:14px;padding:16px;
+  box-shadow:0 10px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
+  border:1px solid var(--border-color);z-index:110;
+}
 
 /* Search Box inside Sidebar */
 .search-box{
@@ -92,8 +102,17 @@ border:1px solid var(--border-color);z-index:110;}
   color:var(--text);font-size:14px;padding:8px 4px; direction: ltr; text-align: left;
 }
 
-.sheet-list{display:flex;flex-direction:column;gap:8px;
-max-height:65vh;overflow:auto;padding: 0 6px 0 0;}
+.sheet-list{
+  flex-grow: 1; /* Allows the list to take up the remaining space */
+  overflow-y: auto; /* Changed to auto */
+  display:flex;flex-direction:column;gap:8px;
+}
+/* CUSTOM SCROLLBAR */
+.sheet-list::-webkit-scrollbar { width: 8px; }
+.sheet-list::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+.sheet-list::-webkit-scrollbar-thumb { background-color: var(--scrollbar-thumb); border-radius: 20px; border: 2px solid var(--card); }
+.sheet-list::-webkit-scrollbar-thumb:hover { background-color: var(--muted); }
+
 .sheet-item{padding:12px 14px;border-radius:10px;cursor:pointer;font-weight:700;
 text-align:right;color:var(--text);border:1px solid transparent; transition: background .2s ease, border-color .2s ease, transform 0.2s ease;}
 .sheet-item:hover { background: var(--bg1); transform: translateX(-4px); }
@@ -104,12 +123,17 @@ border-color: rgba(78,168,255, .3); color: var(--text);
 
 /* Main content */
 .main{flex:1;min-height:70vh;margin-right:calc(var(--sidebar-w) + 24px); padding-top: 10px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));gap:24px;}
+.grid{
+    display:grid;
+    gap:24px;
+    grid-template-columns: 1fr;
+}
+@media(min-width: 768px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media(min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 
-@media(max-width:1024px){.main{margin-right:calc(var(--sidebar-w) + 24px)}}
 @media(max-width:768px){
   .app{flex-direction:column-reverse;padding-top:70px;}
-  .sidebar{position:relative;top:auto;right:auto;width:100%; margin-bottom: 24px;}
+  .sidebar{position:relative;top:auto;right:auto;width:100%; margin-bottom: 24px; height: auto; max-height: 50vh;}
   .main{margin-right:0}
 }
 
@@ -132,9 +156,9 @@ border-top:1px solid var(--border-color); transition: color .2s ease, background
 background:var(--card);border-radius:14px; border: 1px solid var(--border-color);}
 
 .footer-wrapper{position:fixed;left:0;right:0;bottom:0;z-index:100;}
-.footer-bar{height:50px;background:linear-gradient(90deg,var(--footer-from),var(--footer-to));
-display:flex;align-items:center;justify-content:center;box-shadow:0 -5px 20px rgba(0,0,0, .3);}
-.footer-bar .text{color:white;font-weight:700;font-size:14px;}
+.footer-bar{height:40px;background:linear-gradient(90deg,var(--footer-from),var(--footer-to));
+display:flex;align-items:center;justify-content:center;box-shadow:0 -4px 15px rgba(0,0,0, .25);}
+.footer-bar .text{color:white;font-weight:700;font-size:13px;}
 
 /* Login Styles */
 #loginOverlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
@@ -301,7 +325,8 @@ document.addEventListener("DOMContentLoaded", () => {
       handleWorkbook(wb);
     })
     .catch((error) => {
-        console.error("لم يتم العثور على الملف 'candat_data.xlsx' أو حدث خطأ أثناء تحميله:", error);
+        cardsGrid.innerHTML = '<div class="empty">⚠️ خطأ: لم يتم العثور على ملف البيانات (candat_data.xlsx).</div>';
+        console.error("Error loading data file:", error);
     });
 
   function handleWorkbook(wb) {
@@ -321,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (wb.SheetNames.length > 0) {
         showSheet(wb.SheetNames[0]);
     } else {
-        cardsGrid.innerHTML = '<div class="empty">الملف الذي تم تحميله فارغ أو لا يحتوي على شيتات.</div>';
+        cardsGrid.innerHTML = '<div class="empty">الملف فارغ أو لا يحتوي على شيتات قابلة للعرض.</div>';
     }
   }
 
@@ -369,7 +394,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="card-footer" data-original-text="📄 من شيت: ${item.sheet}">📄 من شيت: ${item.sheet}</div>`;
 
       card.addEventListener("click", () => {
-        copyText(item.content);
+        const contentToCopy = item.content.replace(/\n/g, "<p>&nbsp;</p>");
+        copyText(contentToCopy);
         playClick();
         
         const footer = card.querySelector('.card-footer');
@@ -389,7 +415,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function copyText(text) {
     navigator.clipboard.writeText(text).catch(err => {
-      console.warn("فشل النسخ عبر Navigator API، سيتم استخدام الطريقة البديلة.");
+      console.warn("Clipboard API failed, falling back to execCommand.", err);
       const temp = document.createElement("textarea");
       temp.value = text;
       document.body.appendChild(temp);
@@ -401,7 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function playClick() {
     clickSound.currentTime = 0;
-    clickSound.play().catch(e => console.log("لم يتمكن المتصفح من تشغيل الصوت تلقائياً."));
+    clickSound.play().catch(e => console.log("Audio playback was prevented by the browser."));
   }
 
   searchInput.addEventListener("input", () => {
