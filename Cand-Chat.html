@@ -49,12 +49,18 @@ html,body{
   transition: background .3s ease, color .3s ease;
 }
 
-/* Splash */
+/* Splash Screen */
 .splash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;
 background:var(--bg1);transition:opacity .4s ease;}
-.splash-box{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.splash-box{display:flex;flex-direction:column;align-items:center;gap:16px;}
 .splash .gear{font-size:32px;animation:spin 1s linear infinite;}
 @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.loader-text { font-weight: 800; color: var(--text); font-size: 16px; }
+.loader-text span { animation: blink 1.4s infinite both; }
+.loader-text span:nth-child(2) { animation-delay: .2s; }
+.loader-text span:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%, 80%, 100% { opacity: 0; } 40% { opacity: 1; } }
+
 
 /* Header */
 .header-wrap{position:fixed;top:0;left:0;right:0;height:42px;display:flex;align-items:center;z-index:200;
@@ -73,18 +79,20 @@ transition: background .2s ease, transform .2s ease;}
 
 /* Layout */
 .app{display:flex;flex-direction:row-reverse;gap:24px;
-padding: 70px 24px 80px 24px;
+padding: 70px 24px 70px 24px;
 max-width:1600px;
 margin:0 auto;box-sizing:border-box;}
 .sidebar{
   position:fixed;
   top: 70px; right:24px;width:var(--sidebar-w);
-  height: calc(100vh - 70px - 80px); /* Full height minus header and footer space */
+  height: calc(100vh - 70px - 70px);
   display: flex; flex-direction: column;
   background: var(--card);
-  border-radius:14px;padding:16px;
+  border-radius:14px;
+  /* *** MODIFICATION HERE: Right padding is now 0 *** */
+  padding: 16px 0 16px 16px;
   box-shadow:0 10px 25px -5px var(--shadow-color), 0 8px 10px -6px var(--shadow-color);
-  border:1px solid var(--border-color);z-index:110;
+  border:1px solid var(--border-color);z-index:110;margin-right: -20px;
 }
 
 /* Search Box inside Sidebar */
@@ -93,6 +101,7 @@ margin:0 auto;box-sizing:border-box;}
   background:var(--search-bg);padding:4px 10px;border-radius:10px;
   border:1px solid var(--border-color);transition: border-color .2s ease, box-shadow .2s ease;
   margin-bottom: 16px;
+  /* *** MODIFICATION HERE: Removed right margin *** */
 }
 .search-box:focus-within {
   border-color: var(--accent1); box-shadow: 0 0 0 3px rgba(78,168,255,.25);
@@ -103,9 +112,11 @@ margin:0 auto;box-sizing:border-box;}
 }
 
 .sheet-list{
-  flex-grow: 1; /* Allows the list to take up the remaining space */
-  overflow-y: auto; /* Changed to auto */
+  flex-grow: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
   display:flex;flex-direction:column;gap:8px;
+  padding-left: 6px;
 }
 /* CUSTOM SCROLLBAR */
 .sheet-list::-webkit-scrollbar { width: 8px; }
@@ -133,7 +144,7 @@ border-color: rgba(78,168,255, .3); color: var(--text);
 
 @media(max-width:768px){
   .app{flex-direction:column-reverse;padding-top:70px;}
-  .sidebar{position:relative;top:auto;right:auto;width:100%; margin-bottom: 24px; height: auto; max-height: 50vh;}
+  .sidebar{position:relative;top:auto;right:auto;width:100%; margin-bottom: 24px; height: auto; max-height: 50vh; padding: 16px;}
   .main{margin-right:0}
 }
 
@@ -144,7 +155,7 @@ opacity:0;transform:translateY(10px);}
 .card.visible{opacity:1;transform:translateY(0);}
 .card:hover{transform:translateY(-5px);box-shadow:0 10px 15px -3px var(--shadow-color-hover), 0 4px 6px -4px var(--shadow-color-hover);}
 .card-title{text-align:center;font-weight:800;font-size:16px;color:var(--accent1);
-padding:12px 10px;border-bottom:1px solid var(--border-color);}
+padding:12px 10px;border-bottom:1px solid var(--border-color); text-shadow: 0 0 8px rgba(78, 168, 255, 0.15);}
 .card-content{padding:14px;flex:1;overflow:hidden;display:flex;flex-direction:column;}
 .frame{background:var(--bg1);border-radius:8px;padding:12px;flex:1;
 color:var(--text);font-size:14px;line-height:1.7;overflow:hidden;
@@ -210,7 +221,7 @@ transition:transform .15s ease,box-shadow .15s ease;box-shadow:0 3px 8px rgba(0,
 <div class="splash" id="splash">
   <div class="splash-box">
     <div class="gear">⚙️</div>
-    <div style="font-weight:800;color:var(--text);">جارٍ تحميل الأداة...</div>
+    <div class="loader-text">جارٍ التحميل<span>.</span><span>.</span><span>.</span></div>
   </div>
 </div>
 
@@ -394,7 +405,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="card-footer" data-original-text="📄 من شيت: ${item.sheet}">📄 من شيت: ${item.sheet}</div>`;
 
       card.addEventListener("click", () => {
-        const contentToCopy = item.content.replace(/\n/g, "<p>&nbsp;</p>");
+        // *** FINAL FIX FOR COPYING ***
+        const contentToCopy = item.content.replace(/\n/g, "\n<p>&nbsp;</p>\n");
         copyText(contentToCopy);
         playClick();
         
